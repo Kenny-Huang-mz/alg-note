@@ -61,6 +61,8 @@ int main() {
 正确的松弛方法应该是 dist[b] = min(dist[b], backup[a] + w) 也就是用上次还未更新的路径去更新。
 <br> 假设我们有三个节点a, b, c，现求边数不超过1的，a 到 c 的最短路径
 ![这是图片](/docs/image/BellmanFord_p1.png)
+首先初始化dist[a] = 0，其余节点都为 $\infty$，然后backup复制 dist
+<br>开始第一次遍历（i = 1），首先dist[b] = $\infty$ < backup[a] + w = 1，因此 b 点成功松弛，然后尝试对 C 点更新，因为dist[c] = $\infty$ < backup[b] + w = $\infty$ + 1，因此无法松弛（注意这里是用未更新的dist[b]去松弛，通过这种方式实现了从源点开始向后寻找最短路时，对边数的限制）。因此可以看到，当 i = 1 时，b 到 a 的最短距离为 1 ，c 到 a 的最短距离为3；因为 c 点距 a 点隔 2 条边，所以当 i = 2 时，c 到 a 的最短距离才会更新为 2 。
 
 
 - 为什么该算法可以检测负环？
